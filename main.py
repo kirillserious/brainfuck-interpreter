@@ -1,6 +1,6 @@
 def main():
 	# Просим имя файла
-	file_path = input('Введите имя файла')
+	file_path = input('Введите имя файла: ')
 	
 	# Открываем файл
 	try:
@@ -16,18 +16,18 @@ def main():
 
 	brackets   = []
 
-	i = 0
-	while (i < len(text)):
+	for i in range(len(text)):
 		if text[i] == '[':
 			brackets.append(i)
-		if text[i] == '[':
+		elif text[i] == ']':
 			if len(brackets) == 0:
 				print('Нет открывающейся скобки')
 				return
-			else
+			else:
 				open_dict  [brackets[-1]] = i
 				close_dict [i] = brackets[-1]
-				brackets.pop(-1)
+				brackets.pop()
+
 	if len(brackets) != 0:
 		print('Нет закрывающейся скобки')
 		return
@@ -40,44 +40,46 @@ def main():
 	while (i < len(text)):
 		if text[i] == '>':
 			if pointer == len(memory) - 1:
-				memory.append[0]
+				memory.append(0)
 			pointer += 1
 			i += 1
 
-		else if text[i] == '<':
+		elif text[i] == '<':
 			if pointer == 0:
 				print('Вылезли за память слева')
 				return
 			pointer -= 1
 			i += 1
 
-		else if text[i] == '+':
-			if memory[position] < 255:
-				memory[position] += 1
+		elif text[i] == '+':
+			if memory[pointer] < 255:
+				memory[pointer] += 1
 			else:
-				memory[position] = 0
+				memory[pointer] = 0
 			i += 1
 
-		else if text[i] == '-':
-			if memory[position] > 0:
-				memory[position] -= 1
+		elif text[i] == '-':
+			if memory[pointer] > 0:
+				memory[pointer] -= 1
 			else:
-				memory[position] = 255
+				memory[pointer] = 255
 			i += 1
 
-		else if text[i] == ',':
-			memory[position] = int(input('Введите число'))
+		elif text[i] == ',':
+			memory[pointer] = int(input('Введите число'))
+			i += 1
 
-		else if text[i] == '.':
-			print(chr(memory[position]), end='')
+		elif text[i] == '.':
+			print(chr(memory[pointer]), end='')
+			i += 1
 
-		else if text[i] == '[':
-			if memory[i] != 0:
+		elif text[i] == '[':
+			if memory[pointer] != 0:
 				i += 1
 			else:
 				i = open_dict[i] + 1
 
-		else if text[i] == ']':
+		elif text[i] == ']':
 			i = close_dict[i]
 
 		else:
